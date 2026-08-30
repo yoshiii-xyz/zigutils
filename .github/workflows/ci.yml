@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: ZigCI/setup-zig@v1
-        with:
-          version: 0.14.0
+      - run: |
+          curl -sL https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz | tar -xf -
+          echo "$(pwd)/zig-linux-x86_64-0.14.0" >> $GITHUB_PATH
       - run: zig build -Drelease-fast=true
