@@ -23,8 +23,8 @@ A collection of fast, minimal Linux utilities written in Zig.
 ## Install
 
 ```console
-zig build -Drelease-fast=true
-sudo -S -p '' cp zig-out/bin/<tool> /usr/local/bin/
+zig build --release=fast
+sudo cp zig-out/bin/<tool> /usr/local/bin/
 ```
 
 ## Usage
