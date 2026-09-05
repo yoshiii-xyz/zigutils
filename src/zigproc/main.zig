@@ -2,10 +2,6 @@ const std = @import("std");
 
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
-    var gpa = std.heap.GeneralPurposeAllocator(.{}){};
-    defer _ = gpa.deinit();
-    const allocator = gpa.allocator();
-
     const proc_dir = "/proc";
     var dir = try std.fs.cwd().openDir(proc_dir, .{ .iterate = true });
     defer dir.close();
@@ -15,7 +11,9 @@ pub fn main() !void {
         if (entry.kind != .directory) continue;
         const pid = std.fmt.parseInt(u32, entry.name, 10) catch null;
         if (pid) |_| {
-            const stat = dir.openFile(entry.name ++ "/stat", .{}) catch null;
+            var stat_path_buf: [32]u8 = undefined;
+            const stat_path = std.fmt.bufPrint(&stat_path_buf, "{s}/stat", .{entry.name}) catch continue;
+            const stat = dir.openFile(stat_path, .{}) catch null;
             if (stat) |f| {
                 defer f.close();
                 var buf: [4096]u8 = undefined;

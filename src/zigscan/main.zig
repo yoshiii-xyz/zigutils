@@ -1,6 +1,4 @@
 const std = @import("std");
-const builtin = @import("builtin");
-
 pub fn main() !void {
     const stdout = std.io.getStdOut().writer();
     const stderr = std.io.getStdErr().writer();
@@ -8,15 +6,15 @@ pub fn main() !void {
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    var args = try std.process.argsAlloc(allocator);
+    const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
 
-    if (args.items.len < 2) {
+    if (args.len < 2) {
         try stderr.print("Usage: zigscan <directory>\n", .{});
         std.process.exit(1);
     }
 
-    const dir_path = args.items[1];
+    const dir_path = args[1];
     var dir = try std.fs.cwd().openDir(dir_path, .{ .iterate = true });
     defer dir.close();
 

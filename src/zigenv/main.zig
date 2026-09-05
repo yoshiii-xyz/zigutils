@@ -6,12 +6,12 @@ pub fn main() !void {
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    var args = try std.process.argsAlloc(allocator);
+    const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
 
-    const filter = if (args.items.len > 1) args.items[1] else null;
+    const filter = if (args.len > 1) args[1] else null;
 
-    const env_map = try std.process.getEnvMap(allocator);
+    var env_map = try std.process.getEnvMap(allocator);
     defer env_map.deinit();
 
     var it = env_map.iterator();

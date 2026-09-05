@@ -6,10 +6,10 @@ pub fn main() !void {
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    var args = try std.process.argsAlloc(allocator);
+    const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
 
-    const path = if (args.items.len > 1) args.items[1] else ".";
+    const path = if (args.len > 1) args[1] else ".";
     const cwd = std.fs.cwd();
     const stat = cwd.statFile(path) catch null;
     if (stat) |s| {

@@ -6,17 +6,18 @@ pub fn main() !void {
     defer _ = gpa.deinit();
     const allocator = gpa.allocator();
 
-    var args = try std.process.argsAlloc(allocator);
+    const args = try std.process.argsAlloc(allocator);
     defer std.process.argsFree(allocator, args);
 
-    if (args.items.len < 2) {
+    if (args.len < 2) {
         try stdout.print("Usage: zigbase64 <string>\n", .{});
         std.process.exit(1);
     }
 
-    const input = args.items[1];
-    const encoded = try std.base64.standard.encode(allocator, input);
+    const input = args[1];
+    const encoded = try allocator.alloc(u8, std.base64.standard.Encoder.calcSize(input.len));
     defer allocator.free(encoded);
+    _ = std.base64.standard.Encoder.encode(encoded, input);
 
     try stdout.print("{s}\n", .{encoded});
 }
