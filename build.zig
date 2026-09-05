@@ -25,7 +25,7 @@ pub fn build(b: *std.Build) void {
     for (tools) |tool| {
         const exe = b.addExecutable(.{
             .name = tool,
-            .root_source_file = b.path("src/" ++ tool ++ "/main.zig"),
+            .root_source_file = b.path(b.pathJoin(&.{ "src", tool, "main.zig" })),
             .target = target,
             .optimize = mode,
         });
