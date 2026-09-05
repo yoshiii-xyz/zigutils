@@ -19,7 +19,7 @@ const tools = [_][]const u8{
 };
 
 pub fn build(b: *std.Build) void {
-    const mode = b.standardReleaseOptions();
+    const mode = b.standardOptimizeOption(.{});
     const target = b.standardTargetOptions(.{});
 
     for (tools) |tool| {
