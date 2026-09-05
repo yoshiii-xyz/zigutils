@@ -22,6 +22,8 @@ A collection of fast, minimal Linux utilities written in Zig.
 
 ## Install
 
+Use Zig 0.14.0 for the commands below.
+
 ```console
 zig build --release=fast
 sudo cp zig-out/bin/<tool> /usr/local/bin/
