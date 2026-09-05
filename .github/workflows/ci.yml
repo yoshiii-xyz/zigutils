@@ -15,4 +15,4 @@ jobs:
           curl -fsSL --retry 3 --retry-all-errors https://ziglang.org/download/0.14.0/zig-linux-x86_64-0.14.0.tar.xz -o zig.tar.xz
           tar -xJf zig.tar.xz
           echo "$(pwd)/zig-linux-x86_64-0.14.0" >> "$GITHUB_PATH"
-      - run: zig build -Drelease-fast=true
+      - run: zig build --release=fast
